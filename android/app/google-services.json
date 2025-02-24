@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1045515128184",
+    "project_id": "ethioden-chat",
+    "storage_bucket": "ethioden-chat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045515128184:android:adfb02646be5eeea5c4c8d",
+        "android_client_info": {
+          "package_name": "com.atsed.hidden_messanger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045515128184-hlkhtud4phn0hofqrah9b3m83ugi8ajr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc8QBPUN6PIh_ThK4hio4EChCSo-qQ7D4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045515128184-hlkhtud4phn0hofqrah9b3m83ugi8ajr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
