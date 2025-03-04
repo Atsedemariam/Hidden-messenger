@@ -10,15 +10,19 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late String currentUserId;
   late String currentUserEmail;
-  List<Map<String, dynamic>> filteredUsers = []; // List of filtered users (excluding current user)
-  List<Map<String, dynamic>> messages = []; // Store messages with their metadata
+  List<Map<String, dynamic>> filteredUsers =
+      []; // List of filtered users (excluding current user)
+  List<Map<String, dynamic>> messages =
+      []; // Store messages with their metadata
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    currentUserEmail = FirebaseAuth.instance.currentUser!.email ?? '';  // Get current user's email
-    debugPrint("Current User Email: $currentUserEmail");  // Debugging log for currentUserEmail
+    currentUserEmail = FirebaseAuth.instance.currentUser!.email ??
+        ''; // Get current user's email
+    debugPrint(
+        "Current User Email: $currentUserEmail"); // Debugging log for currentUserEmail
 
     // Fetch the current user's data from the 'users' collection
     _loadUsers();
@@ -27,12 +31,14 @@ class _ChatPageState extends State<ChatPage> {
   // Function to load and filter users based on the current user's email
   void _loadUsers() async {
     try {
-      var usersSnapshot = await FirebaseFirestore.instance.collection('users').get();
+      var usersSnapshot =
+          await FirebaseFirestore.instance.collection('users').get();
 
       // Filter out the current user based on email
       var users = usersSnapshot.docs.map((doc) => doc.data()).toList();
       filteredUsers = users.where((userDoc) {
-        return userDoc['email'] != currentUserEmail;  // Exclude the current user's email
+        return userDoc['email'] !=
+            currentUserEmail; // Exclude the current user's email
       }).toList();
 
       // Get the current user's user_id
@@ -41,16 +47,16 @@ class _ChatPageState extends State<ChatPage> {
         orElse: () => throw Exception("User not found"),
       );
 
-      currentUserId = currentUserDoc['user_id'];  // Get the user_id from the current user's document
+      currentUserId = currentUserDoc[
+          'user_id']; // Get the user_id from the current user's document
       debugPrint("Current User ID: $currentUserId");
 
       // Load messages for the current user
       _loadMessages();
 
       setState(() {
-        isLoading = false;  // Set loading to false once data is loaded
+        isLoading = false; // Set loading to false once data is loaded
       });
-
     } catch (e) {
       debugPrint("Error fetching users: $e");
       setState(() {
@@ -66,10 +72,13 @@ class _ChatPageState extends State<ChatPage> {
     // Fetch messages where the current user is the receiver
     FirebaseFirestore.instance
         .collection('messages')
-        .where('receiver_id', isEqualTo: currentUserId) // Fetch messages where the current user is the receiver
+        .where('receiver_id',
+            isEqualTo:
+                currentUserId) // Fetch messages where the current user is the receiver
         .snapshots()
         .listen((receiverSnapshot) {
-      debugPrint("Receiver Snapshot: ${receiverSnapshot.docs.length} messages found.");
+      debugPrint(
+          "Receiver Snapshot: ${receiverSnapshot.docs.length} messages found.");
 
       setState(() {
         if (receiverSnapshot.docs.isEmpty) {
@@ -87,14 +96,16 @@ class _ChatPageState extends State<ChatPage> {
                 'message_content': doc['message_content'],
                 'sender_id': doc['sender_id'],
                 'receiver_id': doc['receiver_id'],
-                'timestamp': timestamp.toDate(),  // Convert Firestore Timestamp to DateTime
+                'timestamp': timestamp
+                    .toDate(), // Convert Firestore Timestamp to DateTime
               };
             } else {
               return {
                 'message_content': doc['message_content'],
                 'sender_id': doc['sender_id'],
                 'receiver_id': doc['receiver_id'],
-                'timestamp': DateTime.now(),  // Default timestamp if no timestamp exists
+                'timestamp':
+                    DateTime.now(), // Default timestamp if no timestamp exists
               };
             }
           }).toList();
@@ -126,7 +137,9 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Expanded(
               child: isLoading
-                  ? Center(child: CircularProgressIndicator()) // Loading indicator while fetching data
+                  ? Center(
+                      child:
+                          CircularProgressIndicator()) // Loading indicator while fetching data
                   : messages.isEmpty
                       ? Center(
                           child: Text(
@@ -139,16 +152,26 @@ class _ChatPageState extends State<ChatPage> {
                           itemBuilder: (context, index) {
                             var message = messages[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Container(
-                                padding: EdgeInsets.all(12.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue[50],
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Text(
-                                  message['message_content'],
-                                  style: TextStyle(fontSize: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Align(
+                                alignment: Alignment
+                                    .centerLeft, // Align the message to the left
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 8.0,
+                                      horizontal:
+                                          12.0), // Adjust padding to your preference
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[
+                                        50], // Light blue background for the text bubble
+                                    borderRadius: BorderRadius.circular(
+                                        8.0), // Rounded corners for the bubble
+                                  ),
+                                  child: Text(
+                                    message['message_content'],
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
                               ),
                             );

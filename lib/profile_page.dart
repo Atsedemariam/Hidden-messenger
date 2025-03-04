@@ -31,6 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.center,  // Horizontally center the content
             children: [
               // Profile Image (taking up half of the screen height)
+              
+            Text('Well... we are working on profile setting 🛠️, 🖥️ In Development',
+                style: TextStyle(fontSize: 20)),
               Container(
                 width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of the screen width
                 height: MediaQuery.of(context).size.height * 0.3, // Set height to 50% of the screen height
@@ -46,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                 ),
               ),
+              
               SizedBox(height: 20), // Space between the image and the button
               ElevatedButton(
                 onPressed: _pickImage, // Trigger image picker
